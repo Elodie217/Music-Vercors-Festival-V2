@@ -32,7 +32,7 @@ if (isset($userInfos)) {
 
         if ($userInfos["motDePasse"] >= 6 && $userInfos["confirmationMotDePasse"] >= 6) {
             if ($userInfos["motDePasse"] == $userInfos["confirmationMotDePasse"]) {
-                $mdp = password_hash($userInfos["motDePasse"], PASSWORD_DEFAULT);
+                $mdp = hash("whirlpool", $userInfos["motDePasse"]);
             } else {
                 echo 'Les mots de passe sont différents.';
             }
@@ -42,7 +42,12 @@ if (isset($userInfos)) {
 
         $date = new \DateTime();
 
+        $userRepo = new UserRepositories($database);
 
+        if ($userRepo->checkUserExist($user) === 1) {
+            echo "Email already taken";
+            return;
+        }
 
         $infosUser = array(
             "Nom_user" => $nom,
@@ -54,27 +59,24 @@ if (isset($userInfos)) {
             "DateRGPD" => $date->format('d/m/Y')
         );
 
-        var_dump($user);
-
         $user = new User($infosUser);
 
         $userRepositorie = new UserRepositories($database);
 
         $retourUser = $userRepositorie->creerUser($user);
 
-        var_dump($retourUser);
 
         if ($retourUser) {
             echo 'success';
             die;
         } else {
-            echo "C'est la merde";
+            echo "Erreur";
             // header('location:../index.php?erreur=');
             die;
         }
     } else {
-        echo 'Merci de remplir tous les champs.2';
+        echo 'Merci de remplir tous les champs.';
     }
 } else {
-    echo 'Merci de remplir tous les champs.1';
+    echo 'Merci de remplir tous les champs.';
 }

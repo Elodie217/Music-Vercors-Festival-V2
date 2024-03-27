@@ -12,7 +12,7 @@ class UserRepositories
 
     private $DB;
 
-    public function __construct(Db $dbConnexion)
+    public function __construct()
     {
         $database = new Db;
         $this->DB = $database->getDB();
@@ -20,26 +20,6 @@ class UserRepositories
         require_once __DIR__ . '/../config/database.php';
     }
 
-
-    public function creerUser2(User $user)
-    {
-        var_dump($user);
-        $nom = $user->getNom_user();
-        $prenom = $user->getPrenom_user();
-        $email = $user->getEmail_user();
-        $telephone = $user->getTelephone_user();
-        $adresse = $user->getAdressePostale_user();
-        $password = $user->getMotDePasse_user();
-        $role = $user->getRole_user();
-        $RGPD = $user->getDateRGPD();
-
-        $sql = "INSERT INTO mvf_user VALUES(NULL,?,?,?,?,?,?,?,?)";
-        $stmt = $this->DB->prepare($sql);
-
-        $stmt->execute([$nom, $prenom, $email, $telephone, $adresse, $password, 0, $RGPD]);
-
-        return $stmt->rowCount() == 1;
-    }
 
     public function creerUser(User $user): bool
     {
@@ -66,94 +46,117 @@ class UserRepositories
 
     public function login(string $email, string $password)
     {
+        $hash = hash("whirlpool", $password);
 
-        $sql = "SELECT * FROM tdl_user WHERE EMAIL = :email";
+        // $sql = "SELECT * FROM mvf_user WHERE Email_user = '$email' AND MotDePasse_user = '$hash' ";
 
-        $statement = $this->DB->prepare($sql);
-        $statement->bindParam(':email', $email);
-        $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
-        $user = $statement->fetch();
+        // try {
+        //     $statement = $this->DB->prepare($sql);
+        //     $statement->execute();
+        //     $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
+        //     return $statement->fetch();
+        // } catch (\PDOException $e) {
+        //     var_dump($e);
+        // }
+        try {
+            $stmt = $this->DB->query("SELECT * FROM mvf_user WHERE Email_user = '$email' AND MotDePasse_user = '$hash' ");
+        } catch (\PDOException $e) {
+            var_dump($e);
+        }
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $user = new User($row);
+        }
 
-        if ($user) {
-            if (password_verify($password, $user->getMot_de_passe())) {
-                return $statement->rowCount() == 1;
-            } else {
-                return false;
-            }
+        if (isset($user)) {
+            $_SESSION["connecté"] = $user->getId_user();
+            return "connected";
         } else {
-            return false;
+            return "not connected";
         }
     }
 
+    public function checkUserExist(User $user)
+    {
+        $email = $user->getEmail_user();
 
+        try {
+            $stmt = $this->DB->query("SELECT * FROM mvf_user WHERE Email_user = '$email' ");
+        } catch (\PDOException $e) {
+            return $e;
+        }
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $user = new User($row);
+        }
+
+        return $stmt->rowCount() == 1;
+    }
 
 
     public function getUserbyEmail(string $email): User|bool
     {
-        $sql = "SELECT * FROM tdl_user WHERE Email = :email";
+        $sql = "SELECT * FROM mvf_user WHERE Email_user = :email";
 
         $statement = $this->DB->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
+        $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
         $retour = $statement->fetch();
 
         return $retour;
     }
 
-    public function getUserbyId(string $IdUser): User|bool
-    {
-        $sql = "SELECT * FROM tdl_user WHERE Id_user = :IdUser";
+    // public function getUserbyId(string $IdUser): User|bool
+    // {
+    //     $sql = "SELECT * FROM tdl_user WHERE Id_user = :IdUser";
 
-        $statement = $this->DB->prepare($sql);
-        $statement->bindParam(':IdUser', $IdUser);
-        $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
-        $retour = $statement->fetch();
+    //     $statement = $this->DB->prepare($sql);
+    //     $statement->bindParam(':IdUser', $IdUser);
+    //     $statement->execute();
+    //     $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
+    //     $retour = $statement->fetch();
 
-        return $retour;
-    }
-
-
-    public function deleteUser($id)
-    {
-        try {
-            $sql = "DELETE FROM tdl_tache WHERE Id_user = :ID;
-            DELETE FROM tdl_user WHERE Id_user = :ID;";
-
-            $statement = $this->DB->prepare($sql);
-
-            return $statement->execute([':ID' => $id]);
-        } catch (PDOException $error) {
-            echo "Erreur de suppression : " . $error->getMessage();
-            return FALSE;
-        }
-    }
+    //     return $retour;
+    // }
 
 
+    // public function deleteUser($id)
+    // {
+    //     try {
+    //         $sql = "DELETE FROM tdl_tache WHERE Id_user = :ID;
+    //         DELETE FROM tdl_user WHERE Id_user = :ID;";
+
+    //         $statement = $this->DB->prepare($sql);
+
+    //         return $statement->execute([':ID' => $id]);
+    //     } catch (PDOException $error) {
+    //         echo "Erreur de suppression : " . $error->getMessage();
+    //         return FALSE;
+    //     }
+    // }
 
 
-    public function updateUser(User $user): bool
-    {
-        session_start();
 
-        $sql = "UPDATE tdl_user 
-            SET
-              Nom = :Nom,
-              Prenom =  :Prenom,
-              Email = :Email
-            WHERE Id_user = :Id_user";
 
-        $statement = $this->DB->prepare($sql);
+    // public function updateUser(User $user): bool
+    // {
+    //     session_start();
 
-        $retour = $statement->execute([
-            ':Id_user' => $_SESSION['connecté'],
-            ':Nom' => $user->getNom(),
-            ':Prenom' => $user->getPrenom(),
-            ':Email' => $user->getEmail(),
-        ]);
+    //     $sql = "UPDATE tdl_user 
+    //         SET
+    //           Nom = :Nom,
+    //           Prenom =  :Prenom,
+    //           Email = :Email
+    //         WHERE Id_user = :Id_user";
 
-        return $retour;
-    }
+    //     $statement = $this->DB->prepare($sql);
+
+    //     $retour = $statement->execute([
+    //         ':Id_user' => $_SESSION['connecté'],
+    //         ':Nom' => $user->getNom(),
+    //         ':Prenom' => $user->getPrenom(),
+    //         ':Email' => $user->getEmail(),
+    //     ]);
+
+    //     return $retour;
+    // }
 }

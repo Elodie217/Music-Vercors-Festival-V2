@@ -76,7 +76,6 @@ function inscription() {
     motDePasse: motDePasse,
     confirmationMotDePasse: confirmationMotDePasse,
   };
-  console.log(userInscription);
 
   let params = {
     method: "POST",
@@ -88,7 +87,20 @@ function inscription() {
 
   fetch("./inscription.php", params)
     .then((res) => res.text())
-    .then((data) => console.log(data));
+    .then((data) => reussiteEchecInscription(data));
+}
+
+function reussiteEchecInscription(reponse) {
+  if (reponse == "success") {
+    redirection("divInscription", "divConnexion");
+    document.querySelector(".InscriptionReussite").classList.remove("hidden");
+    setTimeout(() => {
+      document.querySelector(".InscriptionReussite").classList.add("hidden");
+    }, 4000);
+  } else {
+    document.querySelector(".champVideMDPInscription").innerText =
+      "Email déjà utilisé";
+  }
 }
 
 /**
@@ -102,4 +114,69 @@ function checkEmail(email) {
   let re =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
+}
+
+/**
+ * [Affichage des différents blocks]
+ *
+ * @param   {[string]}  blockAddHidden     [Le block qui va être caché]
+ * @param   {[string]}  blockRemoveHidden  [Le block qui va apparaiter]
+ */
+function redirection(blockAddHidden, blockRemoveHidden) {
+  document.querySelector("." + blockAddHidden).classList.add("hidden");
+  document.querySelector("." + blockRemoveHidden).classList.remove("hidden");
+}
+
+//////////////////Connexion //////////////////
+
+document
+  .querySelector(".bouttonConnexion")
+  .addEventListener("click", function (evenement) {
+    let emailConnexion = document.querySelector("#emailConnexion").value;
+    let motDePasseConnexion = document.querySelector(
+      "#motDePasseConnexion"
+    ).value;
+
+    if (emailConnexion !== "" && motDePasseConnexion !== "") {
+      document.querySelector(".champVideConnexion").innerText = "";
+      if (checkEmail(emailConnexion) == true) {
+        document.querySelector(".emailIncorrectConnexion").innerText = "";
+
+        connexion();
+      } else {
+        document.querySelector(
+          ".emailIncorrectConnexion"
+        ).innerText = `Merci de mettre un email valide.`;
+        evenement.preventDefault();
+      }
+    } else {
+      document.querySelector(
+        ".champVideConnexion"
+      ).innerText = `Merci de remplir tous les champs.`;
+      evenement.preventDefault();
+    }
+  });
+
+function connexion() {
+  let emailConnexion = document.querySelector("#emailConnexion").value;
+  let motDePasseConnexion = document.querySelector(
+    "#motDePasseConnexion"
+  ).value;
+
+  let userConnexion = {
+    emailConnexion: emailConnexion,
+    motDePasseConnexion: motDePasseConnexion,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(userConnexion),
+  };
+
+  fetch("./connexion.php", params)
+    .then((res) => res.text())
+    .then((data) => console.log(data));
 }
