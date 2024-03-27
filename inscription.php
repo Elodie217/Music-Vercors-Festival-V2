@@ -44,10 +44,7 @@ if (isset($userInfos)) {
 
         $userRepo = new UserRepositories($database);
 
-        if ($userRepo->checkUserExist($user) === 1) {
-            echo "Email already taken";
-            return;
-        }
+
 
         $infosUser = array(
             "Nom_user" => $nom,
@@ -60,6 +57,11 @@ if (isset($userInfos)) {
         );
 
         $user = new User($infosUser);
+
+        if ($userRepo->checkUserExist($user) === 1) {
+            echo "Email already taken";
+            return;
+        }
 
         $userRepositorie = new UserRepositories($database);
 
