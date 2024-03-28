@@ -1,0 +1,25 @@
+@media only screen and (max-width: 1280px) {
+  .blocFormulaire {
+    width: 70%;
+    margin: 3% 12%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .blocFormulaire {
+    width: 90%;
+    margin: 3% 2%;
+  }
+
+  .prixPaye {
+    margin: 40px 0 0 54% !important;
+  }
+  .boutonConnexion {
+    margin: 0 0 0 65%;
+  }
+
+  .connexion {
+    width: 90%;
+    margin: 3% 2%;
+  }
+}
