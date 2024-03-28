@@ -15,12 +15,12 @@
     <div class=" divAccueil w-[50%] mx-[25%] mt-52">
         <h1 class="text-white text-6xl mb-11 text-center" style="  font-family: 'Satisfy', cursive; ">Vercors Musique Festival</h1>
         <div class=" flex justify-between">
-            <button class="bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold mx-8" onclick="redirection('divAccueil', 'divInscription')">Inscription</button>
-            <button class="bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold mx-8" onclick="redirection('divAccueil', 'divConnexion')">Connexion</button>
+            <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold mx-14 bg-[#800080] hover:bg-[#808080] duration-300" onclick="redirection('divAccueil', 'divInscription')">Inscription</button>
+            <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold mx-14 bg-[#800080] hover:bg-[#808080] duration-300" onclick="redirection('divAccueil', 'divConnexion')">Connexion</button>
         </div>
     </div>
 
-    <div class=" bg-indigo-100 flex justify-center items-center ">
+    <div class=" flex justify-center items-center ">
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
             <div class="divInscription bg-white p-10 rounded-lg shadow-lg min-w-full hidden">
                 <h1 class="text-center text-2xl mb-6 text-gray-600 font-bold font-sans">Inscription</h1>
@@ -51,11 +51,11 @@
                 </div>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="confirmationMotDePasse">Confirmation mot de passe</label>
-                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="password" name="confirmationMotDePasse" id="confirmationMotDePasse" placeholder="confirmation mot de passe password" />
+                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="password" name="confirmationMotDePasse" id="confirmationMotDePasse" placeholder="Confirmation du mot de passe" />
                 </div>
                 <div class="champVideMDPInscription text-red-700"></div>
-                <button class="w-full mt-6 bg-indigo-600 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans boutonInscription">Inscritpion</button>
-                <button type="submit" class="w-full mt-6 mb-3 bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans" onclick="redirection('divInscription', 'divConnexion')">Connexion</button>
+                <button class="w-full mt-6  rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans boutonInscription bg-[#800080] hover:bg-[#808080] duration-300">Inscritpion</button>
+                <button type="submit" class="w-full mt-6 mb-3 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#808080] hover:bg-[#800080] duration-300" onclick="redirection('divInscription', 'divConnexion')">Connexion</button>
             </div>
 
             <div class="divConnexion bg-white p-10 rounded-lg shadow-lg min-w-full my-24 hidden">
@@ -76,8 +76,8 @@
 
                 </div>
                 <div>
-                    <button type="submit" class="bouttonConnexion w-full mt-6 bg-indigo-600 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans">Connexion</button>
-                    <button type="submit" class="w-full mt-6 mb-3 bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans" onclick="redirection('divConnexion', 'divInscription')">Inscription</button>
+                    <button type="submit" class="bouttonConnexion w-full mt-6 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#800080] hover:bg-[#808080] duration-300">Connexion</button>
+                    <button type="submit" class="w-full mt-6 mb-3 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#808080] hover:bg-[#800080] duration-300" onclick="redirection('divConnexion', 'divInscription')">Inscription</button>
                 </div>
             </div>
 </body>
