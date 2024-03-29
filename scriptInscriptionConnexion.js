@@ -175,8 +175,21 @@ function connexion() {
     },
     body: JSON.stringify(userConnexion),
   };
-
-  fetch("./connexion.php", params)
-    .then((res) => res.text())
-    .then((data) => console.log(data));
+  fetch(".//connexion.php", params)
+  .then((res) => res.json())
+  .then((data) => {
+    if (data.status === "success") {
+      if (data.role === 1) {
+        window.location.href = "admin_dashboard.php";
+      } else {
+        window.location.href = "index.php";
+      }
+    } else {
+      document.querySelector(".champVideConnexion").innerText = data.message;
+    }
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 }
+

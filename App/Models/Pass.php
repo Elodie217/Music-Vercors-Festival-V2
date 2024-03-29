@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Models;
 
-
-class User
+class Pass
 {
 
     private $Id_pass;
@@ -12,17 +10,26 @@ class User
     private $Date_pass;
     private $TarifReduit_pass;
 
-
-    function __construct(array $datas = array())
+    public function __construct(array $data = [])
     {
-        foreach ($datas as $key => $value) {
-            $this->$key = $value;
+        $this->hydrate($data);
+    }
+
+    public function hydrate(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $setter = 'set' . ucfirst($key);
+            if (method_exists($this, $setter)) {
+                $this->$setter($value);
+            }
         }
     }
 
+
     /**
      * Get the value of Id_pass
-     */
+     */ 
+
     public function getId_pass()
     {
         return $this->Id_pass;
@@ -30,8 +37,11 @@ class User
 
     /**
      * Set the value of Id_pass
-     */
-    public function setId_pass($Id_pass): self
+     *
+     * @return  self
+     */ 
+    public function setId_pass($Id_pass)
+
     {
         $this->Id_pass = $Id_pass;
 
@@ -40,7 +50,8 @@ class User
 
     /**
      * Get the value of Prix_pass
-     */
+     */ 
+
     public function getPrix_pass()
     {
         return $this->Prix_pass;
@@ -48,8 +59,11 @@ class User
 
     /**
      * Set the value of Prix_pass
-     */
-    public function setPrix_pass($Prix_pass): self
+     *
+     * @return  self
+     */ 
+    public function setPrix_pass($Prix_pass)
+
     {
         $this->Prix_pass = $Prix_pass;
 
@@ -58,7 +72,8 @@ class User
 
     /**
      * Get the value of Pass_pass
-     */
+     */ 
+
     public function getPass_pass()
     {
         return $this->Pass_pass;
@@ -66,8 +81,11 @@ class User
 
     /**
      * Set the value of Pass_pass
-     */
-    public function setPass_pass($Pass_pass): self
+     *
+     * @return  self
+     */ 
+    public function setPass_pass($Pass_pass)
+
     {
         $this->Pass_pass = $Pass_pass;
 
@@ -76,7 +94,8 @@ class User
 
     /**
      * Get the value of Date_pass
-     */
+     */ 
+
     public function getDate_pass()
     {
         return $this->Date_pass;
@@ -84,8 +103,11 @@ class User
 
     /**
      * Set the value of Date_pass
-     */
-    public function setDate_pass($Date_pass): self
+     *
+     * @return  self
+     */ 
+    public function setDate_pass($Date_pass)
+
     {
         $this->Date_pass = $Date_pass;
 
@@ -94,7 +116,8 @@ class User
 
     /**
      * Get the value of TarifReduit_pass
-     */
+     */ 
+
     public function getTarifReduit_pass()
     {
         return $this->TarifReduit_pass;
@@ -102,11 +125,15 @@ class User
 
     /**
      * Set the value of TarifReduit_pass
-     */
-    public function setTarifReduit_pass($TarifReduit_pass): self
+     *
+     * @return  self
+     */ 
+    public function setTarifReduit_pass($TarifReduit_pass)
+
     {
         $this->TarifReduit_pass = $TarifReduit_pass;
 
         return $this;
     }
 }
+

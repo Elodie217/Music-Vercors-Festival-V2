@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Repositories;
+session_start();
+use App\DbConnection\Db;
 
-use App\DbConnexion\Db;
 use App\Models\User;
 use PDO;
 use PDOException;
@@ -16,6 +16,7 @@ class UserRepositories
     {
         $database = new Db;
         $this->DB = $database->getDB();
+
 
         require_once __DIR__ . '/../config/database.php';
     }
@@ -47,21 +48,10 @@ class UserRepositories
     public function login(string $email, string $password)
     {
         $hash = hash("whirlpool", $password);
-
-        // $sql = "SELECT * FROM mvf_user WHERE Email_user = '$email' AND MotDePasse_user = '$hash' ";
-
-        // try {
-        //     $statement = $this->DB->prepare($sql);
-        //     $statement->execute();
-        //     $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
-        //     return $statement->fetch();
-        // } catch (\PDOException $e) {
-        //     var_dump($e);
-        // }
         try {
             $stmt = $this->DB->query("SELECT * FROM mvf_user WHERE Email_user = '$email' AND MotDePasse_user = '$hash' ");
         } catch (\PDOException $e) {
-            var_dump($e);
+
         }
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $user = new User($row);
@@ -69,7 +59,8 @@ class UserRepositories
 
         if (isset($user)) {
             $_SESSION["connecté"] = $user->getId_user();
-            return "connected";
+             return "connected";;
+
         } else {
             return "not connected";
         }
@@ -104,6 +95,7 @@ class UserRepositories
 
         return $retour;
     }
+
 
 
     public function getUserbyId(string $IdUser): User|bool

@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-require_once "./App/config/database.php";
+require_once "../Breif-music/config/database.php";
 require_once "./autoload.php";
 
-use App\DbConnexion\Db;
+use App\DbConnection\Db;
+
 use App\Models\User;
 use App\Repositories\UserRepositories;
 
@@ -44,6 +45,10 @@ if (isset($userInfos)) {
 
         $userRepo = new UserRepositories($database);
 
+        if ($userRepo->checkUserExist($user) === 1) {
+            echo "Email already taken";
+            return;
+        }
 
 
         $infosUser = array(
@@ -58,10 +63,6 @@ if (isset($userInfos)) {
 
         $user = new User($infosUser);
 
-        if ($userRepo->checkUserExist($user) === 1) {
-            echo "Email already taken";
-            return;
-        }
 
         $userRepositorie = new UserRepositories($database);
 
@@ -76,9 +77,10 @@ if (isset($userInfos)) {
             // header('location:../index.php?erreur=');
             die;
         }
-    } else {
+        } else {
         echo 'Merci de remplir tous les champs.';
-    }
-} else {
+        }
+    }   else {
     echo 'Merci de remplir tous les champs.';
-}
+    }
+

@@ -1,11 +1,12 @@
 <?php
 
-use App\DbConnexion\Db;
+use App\DbConnection\Db;
 use App\Repositories\UserRepositories;
+require_once "./config/database.php";
+
 
 session_start();
 
-require_once "./App/config/database.php";
 require_once "./autoload.php";
 
 $mailAdmin = htmlspecialchars("admin@admin.com");
@@ -19,31 +20,45 @@ if (isset($_POST)) {
 
     if (isset($user['emailConnexion']) && !empty($user['emailConnexion']) && isset($user['motDePasseConnexion']) && !empty($user['motDePasseConnexion'])) {
 
-
         $dbConnexion = new Db();
         $UserRepositories = new UserRepositories($dbConnexion);
 
         if (filter_var($user['emailConnexion'], FILTER_VALIDATE_EMAIL)) {
             $email = htmlspecialchars($user['emailConnexion']);
         } else {
-            echo 'email invalide';
+
+            $response = array(
+                'status' => 'error',
+                'message' => 'Email invalide'
+            );
+            echo json_encode($response);
+            exit();
         }
-
-
 
         if ($UserRepositories->login($email, $user["motDePasseConnexion"])) {
-
             $utilisateur = $UserRepositories->getUserbyEmail($email);
             $roleUser = $utilisateur->getRole_user();
-            if ($roleUser == 1) {
-                echo "Je vais sur le tableau de bord de l'Admin";
-            } else {
-                echo 'Je vais sur le tableau de bord du User';
-            }
+            $_SESSION['user_id'] = $utilisateur->getId_user();
+            $_SESSION['role'] = $roleUser;
+            $response = array(
+                'status' => 'success',
+                'role' => $roleUser
+            );
+            echo json_encode($response);
         } else {
-            echo 'FALSE';
+            $response = array(
+                'status' => 'error',
+                'message' => 'Identifiants incorrects'
+            );
+            echo json_encode($response);
         }
-    } else {
-        echo 'Merci de remplir tous les champs.';
+        } else {
+            $response = array(
+                'status' => 'error',
+                'message' => 'Merci de remplir tous les champs.'
+            );
+        echo json_encode($response);
+        exit();
     }
 }
+
