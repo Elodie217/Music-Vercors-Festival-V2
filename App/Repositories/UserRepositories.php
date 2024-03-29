@@ -105,6 +105,7 @@ class UserRepositories
         return $retour;
     }
 
+
     public function getUserbyId(string $IdUser): User|bool
     {
         $sql = "SELECT * FROM mvf_user WHERE Id_user = :IdUser";
@@ -167,4 +168,5 @@ class UserRepositories
 
         return $retour;
     }
+
 }
