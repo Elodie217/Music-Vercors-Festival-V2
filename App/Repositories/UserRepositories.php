@@ -105,58 +105,68 @@ class UserRepositories
         return $retour;
     }
 
-    // public function getUserbyId(string $IdUser): User|bool
-    // {
-    //     $sql = "SELECT * FROM tdl_user WHERE Id_user = :IdUser";
 
-    //     $statement = $this->DB->prepare($sql);
-    //     $statement->bindParam(':IdUser', $IdUser);
-    //     $statement->execute();
-    //     $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
-    //     $retour = $statement->fetch();
+    public function getUserbyId(string $IdUser): User|bool
+    {
+        $sql = "SELECT * FROM mvf_user WHERE Id_user = :IdUser";
 
-    //     return $retour;
-    // }
+        $statement = $this->DB->prepare($sql);
+        $statement->bindParam(':IdUser', $IdUser);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, User::class);
+        $retour = $statement->fetch();
 
-
-    // public function deleteUser($id)
-    // {
-    //     try {
-    //         $sql = "DELETE FROM tdl_tache WHERE Id_user = :ID;
-    //         DELETE FROM tdl_user WHERE Id_user = :ID;";
-
-    //         $statement = $this->DB->prepare($sql);
-
-    //         return $statement->execute([':ID' => $id]);
-    //     } catch (PDOException $error) {
-    //         echo "Erreur de suppression : " . $error->getMessage();
-    //         return FALSE;
-    //     }
-    // }
+        return $retour;
+    }
 
 
+    public function deleteUser($id)
+    {
+        try {
+            $sql = "DELETE FROM mvf_reservation WHERE Id_user = :ID;
+            DELETE FROM mvf_user WHERE Id_user = :ID;";
+
+            $statement = $this->DB->prepare($sql);
+
+            return $statement->execute([':ID' => $id]);
+        } catch (PDOException $error) {
+            echo "Erreur de suppression : " . $error->getMessage();
+            return FALSE;
+        }
+    }
 
 
-    // public function updateUser(User $user): bool
-    // {
-    //     session_start();
 
-    //     $sql = "UPDATE tdl_user 
-    //         SET
-    //           Nom = :Nom,
-    //           Prenom =  :Prenom,
-    //           Email = :Email
-    //         WHERE Id_user = :Id_user";
 
-    //     $statement = $this->DB->prepare($sql);
+    public function updateUser(User $user): bool
+    {
+        session_start();
 
-    //     $retour = $statement->execute([
-    //         ':Id_user' => $_SESSION['connecté'],
-    //         ':Nom' => $user->getNom(),
-    //         ':Prenom' => $user->getPrenom(),
-    //         ':Email' => $user->getEmail(),
-    //     ]);
+        $sql = "UPDATE mvf_user 
+            SET
+              Nom_user = :Nom,
+              Prenom_user =  :Prenom,
+              Email_user = :Email,
+              Telephone_user = :Tel,
+              AdressePostale_user = :Adresse,
+              MotDePasse_user = :MDP
 
-    //     return $retour;
-    // }
+            WHERE Id_user = :Id_user";
+
+        $statement = $this->DB->prepare($sql);
+
+        $retour = $statement->execute([
+            ':Id_user' => $_SESSION['connecté'],
+            ':Nom' => $user->getNom_user(),
+            ':Prenom' => $user->getPrenom_user(),
+            ':Email' => $user->getEmail_user(),
+            ':Tel' => $user->getTelephone_user(),
+            ':Adresse' => $user->getAdressePostale_user(),
+            ':MDP' => $user->getMotDePasse_user(),
+
+        ]);
+
+        return $retour;
+    }
+
 }
