@@ -15,6 +15,7 @@
     <div class=" divAccueil w-[50%] mx-[25%] mt-52">
         <h1 class="text-white text-6xl mb-11 text-center" style="  font-family: 'Satisfy', cursive; ">Vercors Musique Festival</h1>
         <div class=" flex justify-between">
+
             <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold mx-14 bg-[#800080] hover:bg-[#808080] duration-300" onclick="redirection('divAccueil', 'divInscription')">Inscription</button>
             <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold mx-14 bg-[#800080] hover:bg-[#808080] duration-300" onclick="redirection('divAccueil', 'divConnexion')">Connexion</button>
         </div>
@@ -51,6 +52,7 @@
                 </div>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="confirmationMotDePasse">Confirmation mot de passe</label>
+
                     <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="password" name="confirmationMotDePasse" id="confirmationMotDePasse" placeholder="Confirmation du mot de passe" />
                 </div>
                 <div class="champVideMDPInscription text-red-700"></div>
@@ -76,6 +78,7 @@
 
                 </div>
                 <div>
+
                     <button type="submit" class="bouttonConnexion w-full mt-6 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#800080] hover:bg-[#808080] duration-300">Connexion</button>
                     <button type="submit" class="w-full mt-6 mb-3 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#808080] hover:bg-[#800080] duration-300" onclick="redirection('divConnexion', 'divInscription')">Inscription</button>
                 </div>

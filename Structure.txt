@@ -1,0 +1,28 @@
+project/
+│
+├── App/
+│   ├── DbConnection/
+│   │   └── Db.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Reservation.php
+│   │   ├── Pass.php
+│   │   └── Nuit.php
+│   ├── Repositories/
+│   │   ├── UserRepository.php
+│   │   ├── ReservationRepository.php
+│   │   ├── PassRepository.php
+│   │   └── NuitRepository.php
+│   └── Config/
+│       └── database.php
+│
+├── autoload.php
+├── connection.php
+├── index.php
+├── indexInscriptionConnexion.php
+├── init.php
+├── inscription.php
+├── create_reservation.php
+├── delete_reservation.php
+├── update_reservation.php
+└── scriptInscriptionConnexion.php 

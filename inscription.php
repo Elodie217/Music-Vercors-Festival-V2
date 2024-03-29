@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once "./App/config/database.php";
+require_once "./config/database.php";
 require_once "./autoload.php";
 
 use App\DbConnexion\Db;
@@ -44,6 +44,10 @@ if (isset($userInfos)) {
 
         $userRepo = new UserRepositories($database);
 
+        if ($userRepo->checkUserExist($userInfos['email']) === 1) {
+            echo "Email already taken";
+            return;
+        }
 
 
         $infosUser = array(
@@ -58,10 +62,6 @@ if (isset($userInfos)) {
 
         $user = new User($infosUser);
 
-        if ($userRepo->checkUserExist($user) === 1) {
-            echo "Email already taken";
-            return;
-        }
 
         $userRepositorie = new UserRepositories($database);
 

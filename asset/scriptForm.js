@@ -4,7 +4,7 @@ let blocOptions = document.querySelector("#options");
 
 blocOptions.classList.add("hidden");
 
-let NombrePlaces = document.querySelector("#NombrePlaces");
+let NombrePlaces = document.querySelector("#Nombre_reservation");
 
 let choixJour1 = document.querySelector("#choixJour1");
 let choixJour2 = document.querySelector("#choixJour2");

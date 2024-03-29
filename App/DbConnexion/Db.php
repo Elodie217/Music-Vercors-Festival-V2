@@ -14,7 +14,6 @@ final class Db
     public function __construct()
     {
         $this->config = __DIR__ . '/../config/database.php';
-        require_once $this->config;
 
         try {
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
