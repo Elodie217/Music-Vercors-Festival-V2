@@ -2,9 +2,11 @@
 session_start();
 
 require_once "./config/database.php";
+
 require_once "./autoload.php";
 
-use App\DbConnexion\Db;
+use App\DbConnection\Db;
+
 use App\Models\User;
 use App\Repositories\UserRepositories;
 
@@ -45,6 +47,7 @@ if (isset($userInfos)) {
         $userRepo = new UserRepositories($database);
 
         if ($userRepo->checkUserExist($userInfos['email']) === 1) {
+
             echo "Email already taken";
             return;
         }
@@ -76,9 +79,10 @@ if (isset($userInfos)) {
             // header('location:../index.php?erreur=');
             die;
         }
-    } else {
+        } else {
         echo 'Merci de remplir tous les champs.';
-    }
-} else {
+        }
+    }   else {
     echo 'Merci de remplir tous les champs.';
-}
+    }
+

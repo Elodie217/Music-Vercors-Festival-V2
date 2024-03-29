@@ -175,24 +175,22 @@ function connexion() {
     },
     body: JSON.stringify(userConnexion),
   };
-  fetch("./connexion.php", params)
-    .then((res) => {
-      res.json();
-      console.log(res);
-    })
-    .then((data) => {
-      console.log(data);
-      if (data.status === "success") {
-        if (data.role === 1) {
-          window.location.href = "admin_dashboard.php";
-        } else {
-          window.location.href = "index.php";
-        }
+
+  fetch(".//connexion.php", params)
+  .then((res) => res.json())
+  .then((data) => {
+    if (data.status === "success") {
+      if (data.role === 1) {
+        window.location.href = "admin_dashboard.php";
       } else {
-        document.querySelector(".champVideConnexion").innerText = data.message;
+        window.location.href = "index.php";
       }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    } else {
+      document.querySelector(".champVideConnexion").innerText = data.message;
+    }
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 }
+

@@ -2,6 +2,8 @@
 
 use App\DbConnection\Db;
 use App\Repositories\UserRepositories;
+require_once "./config/database.php";
+
 
 require_once "./config/database.php";
 
@@ -58,7 +60,9 @@ if (isset($_POST)) {
             'status' => 'error',
             'message' => 'Merci de remplir tous les champs.'
         );
+
         echo json_encode($response);
         exit();
     }
 }
+

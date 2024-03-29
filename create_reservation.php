@@ -90,6 +90,7 @@ if (isset($_POST["create_reservation"])) {
         $enfants = 0;
     }
 
+
     $selectedPass = $passRepository->getPassById($passId);
     $selectedNuit = $nuitRepository->getNuitById($nuitId);
     $passPrice = $selectedPass->getPrix_pass();
@@ -344,6 +345,7 @@ if (isset($_POST["create_reservation"])) {
                                             ?></option>
                     <? php // endforeach; 
                     ?>
+
                 </select>
             </div>
             <div class="mb-4">
@@ -356,6 +358,7 @@ if (isset($_POST["create_reservation"])) {
                                             ?></option>
                     <? php // endforeach; 
                     ?>
+
                 </select>
             </div>
             <button name="create_reservation" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Reservation</button>
@@ -363,3 +366,4 @@ if (isset($_POST["create_reservation"])) {
     </div>
 </body>
 </html> -->
+

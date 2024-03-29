@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\DbConnexion\Db;
+
 use App\Models\Pass;
 use PDO;
 
@@ -26,6 +27,7 @@ class PassRepository
             $PassesArray[] = new Pass($row);
         }
         return $PassesArray;
+
     }
     public function getPassById($id)
     {
@@ -37,3 +39,4 @@ class PassRepository
         return $stmt->fetch();
     }
 }
+

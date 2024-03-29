@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Repositories;
+session_start();
+use App\DbConnection\Db;
 
-use App\DbConnexion\Db;
 use App\Models\User;
 use PDO;
 use PDOException;
@@ -16,6 +16,7 @@ class UserRepositories
     {
         $database = new Db;
         $this->DB = $database->getDB();
+
     }
 
 
@@ -48,6 +49,7 @@ class UserRepositories
         try {
             $stmt = $this->DB->query("SELECT * FROM mvf_user WHERE Email_user = '$email' AND MotDePasse_user = '$hash' ");
         } catch (\PDOException $e) {
+
         }
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $user = new User($row);
@@ -56,6 +58,7 @@ class UserRepositories
         if (isset($user)) {
             $_SESSION["connecté"] = $user->getId_user();
             return "connected";;
+
         } else {
             return "not connected";
         }
@@ -155,4 +158,5 @@ class UserRepositories
 
         return $retour;
     }
+
 }

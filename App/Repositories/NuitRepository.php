@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\DbConnexion\Db;
+
 use App\Models\Nuit;
 use PDO;
 
@@ -38,3 +39,4 @@ class NuitRepository
         return $stmt->fetch();
     }
 }
+

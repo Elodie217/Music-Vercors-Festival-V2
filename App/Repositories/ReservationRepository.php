@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\DbConnexion\Db;
+
 use App\Models\Reservation;
 use PDO;
 
@@ -59,6 +60,7 @@ class ReservationRepository
         return false;
     }
 
+
     public function updateReservation(Reservation $reservation)
     {
         $sql = "UPDATE mvf_reservation SET Nombre_reservation = :Nombre_reservation, Enfants_reservation = :Enfants_reservation, NombreCasque_reservation = :NombreCasque_reservation, NombreLuge_reservation = :NombreLuge_reservation, PrixTotal_reservation = :PrixTotal_reservation, Id_user = :Id_user WHERE Id_reservation = :Id_reservation";
@@ -77,18 +79,21 @@ class ReservationRepository
     {
 
         /*****************************Delete nuitreservation  ****************************/
+
         $delNuitSql = "DELETE FROM mvf_nuitreservation WHERE Id_reservation = :id";
         $delNuitStmt = $this->db->prepare($delNuitSql);
         $delNuitStmt->bindParam(':id', $id);
         $delNuitStmt->execute();
 
         /*****************************Delete nuitreservation  ****************************/
+
         $delPassSql = "DELETE FROM mvf_reservationpass WHERE Id_reservation = :id";
         $delPassStmt = $this->db->prepare($delPassSql);
         $delPassStmt->bindParam(':id', $id);
         $delPassStmt->execute();
 
         /*****************************Delete reservation  ****************************/
+
         $sql = "DELETE FROM mvf_reservation WHERE Id_reservation = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
@@ -133,6 +138,7 @@ class ReservationRepository
         $query = "UPDATE mvf_nuitreservation SET Id_nuit = ? WHERE Id_reservation = ?";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$nuitId, $reservationId]);
+
     }
 
     /***************************** mettre à jour les pass dans la reservation ****************************/
@@ -143,3 +149,4 @@ class ReservationRepository
         $stmt->execute([$passId, $reservationId]);
     }
 }
+
