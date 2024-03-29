@@ -168,6 +168,12 @@
                 <div class="messageErreurLuge"></div>
             </div>
 
+             <div class="flex items-start my-6">
+                <input type="checkbox" name="RGPD" id="RGPD" require>
+                <label for="RGPD">Mentions légales RGPD : J'autorise ce site à conserver mes données transmises via ce formulaire</label>
+
+            </div>
+
             <p class="bouton" onclick="precedent(blocOptions, blocReservation)">Précédent</p>
 
             <button type="submit" name="soumission" class="bouton">Réserver</button>
