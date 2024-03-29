@@ -26,9 +26,6 @@ class Reservation{
             }
         }
     }
-
-
-
     /**
      * Get the value of Id_reservation
      */ 
