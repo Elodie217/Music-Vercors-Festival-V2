@@ -3,23 +3,30 @@
 use App\DbConnection\Db;
 use App\Repositories\UserRepositories;
 require_once "./config/database.php";
+
+
+session_start();
+
 require_once "./autoload.php";
 
 $mailAdmin = htmlspecialchars("admin@admin.com");
 $motDePasseAdmin = password_hash("Jesuisadmin", PASSWORD_DEFAULT);
 // Personne possédant un compte
 
+
 if (isset($_POST)) {
     $data = file_get_contents("php://input");
     $user = (json_decode($data, true));
 
     if (isset($user['emailConnexion']) && !empty($user['emailConnexion']) && isset($user['motDePasseConnexion']) && !empty($user['motDePasseConnexion'])) {
+
         $dbConnexion = new Db();
         $UserRepositories = new UserRepositories($dbConnexion);
 
         if (filter_var($user['emailConnexion'], FILTER_VALIDATE_EMAIL)) {
             $email = htmlspecialchars($user['emailConnexion']);
         } else {
+
             $response = array(
                 'status' => 'error',
                 'message' => 'Email invalide'
@@ -54,3 +61,4 @@ if (isset($_POST)) {
         exit();
     }
 }
+

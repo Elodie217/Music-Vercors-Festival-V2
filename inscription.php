@@ -5,6 +5,7 @@ require_once "../Breif-music/config/database.php";
 require_once "./autoload.php";
 
 use App\DbConnection\Db;
+
 use App\Models\User;
 use App\Repositories\UserRepositories;
 
@@ -49,6 +50,7 @@ if (isset($userInfos)) {
             return;
         }
 
+
         $infosUser = array(
             "Nom_user" => $nom,
             "Prenom_user" => $prenom,
@@ -60,6 +62,7 @@ if (isset($userInfos)) {
         );
 
         $user = new User($infosUser);
+
 
         $userRepositorie = new UserRepositories($database);
 
@@ -80,3 +83,4 @@ if (isset($userInfos)) {
     }   else {
     echo 'Merci de remplir tous les champs.';
     }
+
