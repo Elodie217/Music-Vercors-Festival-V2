@@ -40,11 +40,11 @@ class PassRepository
 
     public function getDistinctPasses()
     {
-        $query = "SELECT Id_pass, Pass_pass,
+        $query = "SELECT Pass_pass, 
                         MAX(CASE WHEN TarifReduit_pass = 0 THEN Prix_pass END) AS Prix_pass,
                         MAX(CASE WHEN TarifReduit_pass = 1 THEN Prix_pass END) AS Prix_pass_reduit
                   FROM mvf_pass
-                  GROUP BY Pass_pass, Id_pass";
+                  GROUP BY Pass_pass";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
