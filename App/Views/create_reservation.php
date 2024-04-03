@@ -29,6 +29,8 @@ $passTypes = $passRepository->getDistinctPasses();
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../asset/style.css">
+    <link rel="stylesheet" href="../asset/responsive.css">
 </head>
 
 <body class="relative bg-[url('../asset/medias/concert-852575_1920.jpg')] bg-cover bg-fixed bg-center">
@@ -153,5 +155,5 @@ $passTypes = $passRepository->getDistinctPasses();
     </form>
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
-
+<script src="../asset/scriptForm.js"></script>
 </html>

@@ -142,6 +142,6 @@ foreach ($passRepository->getAllPasses() as $pass) {
         </div>
     </form>
 </body>
-<script src="../../asset/scriptForm.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="../../asset/scriptForm.js"></script>
 </html>
