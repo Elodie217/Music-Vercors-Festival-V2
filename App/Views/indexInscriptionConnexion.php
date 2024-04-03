@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . "/../../init.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./asset/style.css">
+    <link rel="stylesheet" href="./asset/responsive.css">
 </head>
 
 <body class="relative bg-[url('./asset/medias/concert-852575_1920.jpg')] bg-cover bg-fixed bg-center">
@@ -85,6 +91,5 @@
             </div>
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="./scriptInscriptionConnexion.js"></script>
-
+<script src="./asset/scriptInscriptionConnexion.js"></script>
 </html>

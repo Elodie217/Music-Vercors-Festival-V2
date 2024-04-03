@@ -13,16 +13,39 @@ project/
 │   │   ├── ReservationRepository.php
 │   │   ├── PassRepository.php
 │   │   └── NuitRepository.php
+│   ├── views/
+│   │   ├── create_reservation.php
+│   │   ├── index.php
+│   │   ├── indexInscriptionConnexion.php
+│   │   ├── update_reservation.php
+│   │   ├── 
+│   └── asset/
+│   │  │   
+│   │  ├── scriptForm.js
+│   │  │   
+│   │  ├── responsive.css
+│   │  │   
+│   │  ├── style.css
+│   │  │   
+│   │  └── scriptInscriptionConnexion.js
+│   │   
+│   │       
 │   └── Config/
 │       └── database.php
 │
+│                      
+│    
+│
 ├── autoload.php
+├── public/
+│      └── index.php
+│      └── .htaceess
 ├── connection.php
 ├── index.php
 ├── indexInscriptionConnexion.php
 ├── init.php
 ├── inscription.php
-├── create_reservation.php
-├── delete_reservation.php
-├── update_reservation.php
+├── profile.php
+├── .htaceess
+├── supprimerUser.php
 └── scriptInscriptionConnexion.php 

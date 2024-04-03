@@ -85,9 +85,9 @@ function inscription() {
     body: JSON.stringify(userInscription),
   };
 
-  fetch("./inscription.php", params)
-    .then((res) => res.text())
-    .then((data) => reussiteEchecInscription(data));
+  fetch("/cours/Music-Vercors-Festival-V2-dev/register", params)
+  .then((res) => res.text())
+  .then((data) => reussiteEchecInscription(data));
 }
 
 function reussiteEchecInscription(reponse) {
@@ -156,7 +156,6 @@ document
       evenement.preventDefault();
     }
   });
-
   function connexion() {
     let emailConnexion = document.querySelector("#emailConnexion").value;
     let motDePasseConnexion = document.querySelector("#motDePasseConnexion").value;
@@ -174,28 +173,27 @@ document
       body: JSON.stringify(userConnexion),
     };
   
-    fetch(".//connexion.php", params)
-      .then((res) => res.text()) 
+    fetch("/cours/Music-Vercors-Festival-V2-dev/login", params)
+      .then((res) => res.text())
       .then((data) => {
-        console.log("Data are :", data); 
+        console.log("1- data:", data);
         try {
-          const jsonData = JSON.parse(data); 
+          const jsonData = JSON.parse(data);
           if (jsonData.status === "success") {
             if (jsonData.role === 1) {
-              window.location.href = "admin_dashboard.php";
+              window.location.href = "/cours/Music-Vercors-Festival-V2-dev/admin_dashboard.php";
             } else {
-              window.location.href = "index.php";
+              window.location.href = "/cours/Music-Vercors-Festival-V2-dev/reservations";
             }
           } else {
             document.querySelector(".champVideConnexion").innerText = jsonData.message;
           }
         } catch (error) {
-          console.error(" problem with pars JSON:", error);
-          console 
+          console.error("Problem / JSON:", error);
+          console.log("data:", data);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }
-

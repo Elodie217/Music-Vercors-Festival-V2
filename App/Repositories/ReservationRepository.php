@@ -30,11 +30,11 @@ class ReservationRepository
         return $reservationArray;
     }
 
-    public function getReservationById($id)
+    public function getReservationById($reservationId)
     {
-        $sql = "SELECT * FROM mvf_reservation WHERE Id_reservation = :id";
+        $sql = "SELECT * FROM mvf_reservation WHERE Id_reservation = :reservationId";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':reservationId', $reservationId);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS, '\App\Models\Reservation');
         return $stmt->fetch();
@@ -62,7 +62,8 @@ class ReservationRepository
 
     public function updateReservation(Reservation $reservation)
     {
-        $sql = "UPDATE mvf_reservation SET Nombre_reservation = :Nombre_reservation, Enfants_reservation = :Enfants_reservation, NombreCasque_reservation = :NombreCasque_reservation, NombreLuge_reservation = :NombreLuge_reservation, PrixTotal_reservation = :PrixTotal_reservation, Id_user = :Id_user, Id_Pass = :Id_Pass WHERE Id_reservation = :Id_reservation";        $stmt = $this->db->prepare($sql);
+        $sql = "UPDATE mvf_reservation SET Nombre_reservation = :Nombre_reservation, Enfants_reservation = :Enfants_reservation, NombreCasque_reservation = :NombreCasque_reservation, NombreLuge_reservation = :NombreLuge_reservation, PrixTotal_reservation = :PrixTotal_reservation, Id_user = :Id_user, Id_Pass = :Id_Pass WHERE Id_reservation = :Id_reservation";     
+        $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':Nombre_reservation', $reservation->getNombre_reservation());
         $stmt->bindValue(':Enfants_reservation', $reservation->getEnfants_reservation());
         $stmt->bindValue(':NombreCasque_reservation', $reservation->getNombreCasque_reservation());
@@ -114,13 +115,24 @@ class ReservationRepository
 
     /***************************** mettre à jour les nuits dans la reservation ****************************/
 
-    public function updateNuitReservation($reservationId, $nuitId)
-    {
-    $query = "UPDATE mvf_nuitreservation SET Id_nuit = ? WHERE Id_reservation = ?";
-    $stmt = $this->db->prepare($query);
-    $stmt->execute([$nuitId, $reservationId]);
-    }
+    public function updateNuitReservation($reservationId, $nuitsId)
+{
+    $delNuitSql = "DELETE FROM mvf_nuitreservation WHERE Id_reservation = :id";
+    $delNuitStmt = $this->db->prepare($delNuitSql);
+    $delNuitStmt->bindParam(':id', $reservationId);
+    $delNuitStmt->execute();
 
+    foreach ($nuitsId as $nuitId) {
+        echo "Inserting nuit reservation: Reservation ID = $reservationId, Nuit ID = $nuitId<br>";
+        $query = "INSERT INTO mvf_nuitreservation (Id_reservation, Id_nuit) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        if (!$stmt->execute([$reservationId, $nuitId])) {
+            return false;
+        }
+    }
+    
+    return true;
+}
     
     public function getNuitIdsByReservationId($reservationId)
 {

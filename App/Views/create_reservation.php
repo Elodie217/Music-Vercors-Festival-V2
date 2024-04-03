@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/init.php";
+require_once __DIR__ . "/../../init.php";
 
 use App\DbConnexion\Db;
 use App\Models\Reservation;
@@ -18,75 +18,6 @@ $nuitOptions = $nuitRepository->getAllNuits();
 $passTypes = $passRepository->getDistinctPasses();
 /***************************************************/
 
-$prixTotal = 0;
-
-
-
-    
-    
-    $userId = $_SESSION['user_id'];
-    if (isset($_POST["create_reservation"])) {
-        $nombre = ($_POST['Nombre_reservation']);
-        $nombreCasque = ($_POST['NombreCasque_reservation']);
-        $nombreLuge = ($_POST['NombreLuge_reservation']);
-        var_dump($userId);
-    
-        if (isset($_POST['enfantsOui'])) {
-            $enfants = 1;
-        } else {
-            $enfants = 0;
-        }
-    
-        $passId = intval($_POST['passDate']);
-        $selectedPass = $passRepository->getPassById($passId);
-        $passPrice = $selectedPass->getPrix_pass();
-    
-        $nuitIds = [];
-        foreach ($nuitOptions as $nuit) {
-            $nuitType = str_replace(' ', '', $nuit->getType_nuit());
-            if (isset($_POST[$nuitType])) {
-                $nuitIds[] = $nuit->getId_nuit();
-                var_dump($nuitIds);
-
-            }
-        }
-    
-        $nuitPrice = 0;
-        foreach ($nuitIds as $nuitId) {
-            $selectedNuit = $nuitRepository->getNuitById($nuitId);
-            var_dump($selectedNuit);
-            $nuitPrice += $selectedNuit->getPrix_nuit();
-            var_dump($nuitPrice);
-
-        }
-    
-        $fixedPriceCasque = 5;
-        $fixedPriceLuge = 5;
-        $prixTotal = ($passPrice + $nuitPrice) * $nombre +
-        ($nombreCasque * $fixedPriceCasque) + ($nombreLuge * $fixedPriceLuge);
-    
-        $reservation = new Reservation();
-        $reservation->setNombre_reservation($nombre);
-        $reservation->setEnfants_reservation($enfants);
-        $reservation->setNombreCasque_reservation($nombreCasque);
-        $reservation->setNombreLuge_reservation($nombreLuge);
-        $reservation->setPrixTotal_reservation($prixTotal);
-        $reservation->setId_user($userId);
-        $reservation->setId_pass($passId);
-    
-        if ($reservationRepository->createReservation($reservation)) {
-            echo "Done!";
-            /*************************inserer les Nuits/Passes**************************/
-            foreach ($nuitIds as $nuitId) {
-                $reservationRepository->insertNuitReservation($reservation->getId_reservation(), $nuitId);
-            }
-            header('Location: index.php');
-            exit();
-        } else {
-            echo "Error.";
-        }
-    
-}
 ?>
 
 <!DOCTYPE html>
@@ -98,13 +29,11 @@ $prixTotal = 0;
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="./asset/style.css">
-    <link rel="stylesheet" href="./asset/responsive.css">
 </head>
 
-<body class="relative bg-[url('./asset/medias/concert-852575_1920.jpg')] bg-cover bg-fixed bg-center">
+<body class="relative bg-[url('../asset/medias/concert-852575_1920.jpg')] bg-cover bg-fixed bg-center">
     <a href="index.php" class="absolute top-6 right-[28%] rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold mx-14 bg-[#800080] hover:bg-[#808080] duration-300 z-20">Retour</a>
-    <form action="#" id="inscription" method="POST" name="create_reservation">
+    <form action="/cours/Music-Vercors-Festival-V2-dev/reservations/store" method="post" class="space-y-6">
         <div id="reservation" class="blocFormulaire">
         <h2 class="text-2xl font-bold mb-10">Réservation</h2>
 
@@ -224,6 +153,5 @@ $prixTotal = 0;
     </form>
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="./asset/scriptForm.js"></script>
 
 </html>

@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_URI} !^/cours/Music-Vercors-Festival-V2-dev/public/index.php
+    RewriteRule ^(.*)$ /cours/Music-Vercors-Festival-V2-dev/public/index.php [L]
+</IfModule>

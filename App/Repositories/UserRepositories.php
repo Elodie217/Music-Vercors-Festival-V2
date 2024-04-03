@@ -21,9 +21,11 @@ class UserRepositories
     public function creerUser(User $user): bool
     {
         $sql = "INSERT INTO mvf_user (Nom_user, Prenom_user, Email_user, Telephone_user, AdressePostale_user, MotDePasse_user, Role_user, DateRGPD) VALUES (:Nom_user, :Prenom_user, :Email_user, :Telephone_user, :AdressePostale_user, :MotDePasse_user, :Role_user, :DateRGPD)";
-
+    
         $statement = $this->DB->prepare($sql);
-
+    
+        $role = $user->getRole_user() ?? 0; 
+    
         $retour = $statement->execute([
             ':Nom_user' => $user->getNom_user(),
             ":Prenom_user" => $user->getPrenom_user(),
@@ -31,10 +33,10 @@ class UserRepositories
             ":Telephone_user" => $user->getTelephone_user(),
             ":AdressePostale_user" => $user->getAdressePostale_user(),
             ":MotDePasse_user" => $user->getMotDePasse_user(),
-            ":Role_user" => $user->getRole_user(),
+            ":Role_user" => $role,
             ":DateRGPD" => $user->getDateRGPD()
         ]);
-
+    
         return $retour;
     }
 

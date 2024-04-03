@@ -1,7 +1,7 @@
 <?php
 use App\Repositories\ReservationRepository;
 
-require_once __DIR__ . "/init.php";
+require_once __DIR__ . "/../../init.php";
 
 
 $userId = $_SESSION['user_id'] ?? null;
@@ -24,8 +24,8 @@ if ($userId) {
 <body class="bg-gray-100">
 <h1 class="text-3xl font-bold text-center mt-8">Reservations</h1>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <a href="create_reservation.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Create Reservation</a>
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <a href="/cours/Music-Vercors-Festival-V2-dev/reservations/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Create Reservation</a>  
+      <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -49,8 +49,8 @@ if ($userId) {
                             <td class="px-6 py-4 whitespace-nowrap"><?= $reservation->getNombreLuge_reservation() ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?= $reservation->getPrixTotal_reservation() ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?= $reservation->getId_user() ?></td>
-                          <td> <a href="update_reservation.php?id=<?= $reservation->getId_reservation() ?>" class="text-blue-500 hover:text-blue-700 mr-2">Edit</a></td>
-                          <td><a href="delete_reservation.php?id=<?= $reservation->getId_reservation() ?>" class="text-red-500 hover:text-red-700" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation?')">Delete</a></td>
+                            <td><a href="/cours/Music-Vercors-Festival-V2-dev/reservations/edit/<?php echo $reservation->getId_reservation()?>" class="text-green-500 hover:text-green-700">Edit</td>
+                          <td><a href="/cours/Music-Vercors-Festival-V2-dev/reservations/delete/<?php echo$reservation->getId_reservation() ?>" class="text-red-500 hover:text-red-700" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation?')">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
