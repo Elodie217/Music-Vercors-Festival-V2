@@ -6,6 +6,7 @@ class Nuit
     private $Id_nuit;
     private $Prix_nuit;
     private $Type_nuit;
+    private $Date_nuit;
 
     public function __construct(array $data = [])
     {
@@ -23,6 +24,7 @@ class Nuit
     }
 
   
+    
 
     /**
      * Get the value of Id_nuit
@@ -80,6 +82,26 @@ class Nuit
     public function setType_nuit($Type_nuit)
     {
         $this->Type_nuit = $Type_nuit;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Date_nuit
+     */ 
+    public function getDate_nuit()
+    {
+        return $this->Date_nuit;
+    }
+
+    /**
+     * Set the value of Date_nuit
+     *
+     * @return  self
+     */ 
+    public function setDate_nuit($Date_nuit)
+    {
+        $this->Date_nuit = $Date_nuit;
 
         return $this;
     }

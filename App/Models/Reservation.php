@@ -10,7 +10,7 @@ class Reservation{
     private $NombreLuge_reservation;   
     private $PrixTotal_reservation;    
     private $Id_user ;                 
-    private $Id_pass;       
+    private $Id_Pass;
 
     public function __construct(array $data = [])
     {
@@ -165,23 +165,24 @@ class Reservation{
 
         return $this;
     }
+    
 
     /**
-     * Get the value of Id_pass
+     * Get the value of Id_Pass
      */ 
-    public function getId_pass()
+    public function getId_Pass()
     {
-        return $this->Id_pass;
+        return $this->Id_Pass;
     }
 
     /**
-     * Set the value of Id_pass
+     * Set the value of Id_Pass
      *
      * @return  self
      */ 
-    public function setId_pass($Id_pass)
+    public function setId_Pass($Id_Pass)
     {
-        $this->Id_pass = $Id_pass;
+        $this->Id_Pass = $Id_Pass;
 
         return $this;
     }

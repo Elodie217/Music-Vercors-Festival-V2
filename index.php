@@ -1,14 +1,15 @@
 <?php
-
 use App\Repositories\ReservationRepository;
 
 require_once __DIR__ . "/init.php";
 
 
-$userId = isset($_SESSION['user_id']);
-$reservationRepository = new ReservationRepository();
+$userId = $_SESSION['user_id'] ?? null;
 if ($userId) {
+    $reservationRepository = new ReservationRepository();
     $reservations = $reservationRepository->getReservationsByUserId($userId);
+} else {
+    $reservations=[];
 }
 ?>
 

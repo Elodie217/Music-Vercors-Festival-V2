@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 26 mars 2024 à 14:30
--- Version du serveur : 8.0.31
--- Version de PHP : 8.0.26
+-- Généré le : ven. 29 mars 2024 à 15:06
+-- Version du serveur : 8.2.0
+-- Version de PHP : 8.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `musicvercorsfestivalv2`
+-- Base de données : `mvfv2`
 --
 
 -- --------------------------------------------------------
@@ -32,8 +32,23 @@ CREATE TABLE IF NOT EXISTS `mvf_nuit` (
   `Id_nuit` int NOT NULL AUTO_INCREMENT,
   `Prix_nuit` int DEFAULT NULL,
   `Type_nuit` varchar(255) DEFAULT NULL,
+  `Date_nuit` date DEFAULT NULL,
   PRIMARY KEY (`Id_nuit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
+
+--
+-- Déchargement des données de la table `mvf_nuit`
+--
+
+INSERT INTO `mvf_nuit` (`Id_nuit`, `Prix_nuit`, `Type_nuit`, `Date_nuit`) VALUES
+(1, 5, '1 nuit tente', '2024-07-01'),
+(2, 12, '3 nuits tente', '2024-07-01'),
+(3, 5, '1 nuit camion', '2024-07-01'),
+(4, 12, '3 nuits camion', '2024-07-01'),
+(5, 5, '1 nuit tente', '2024-07-02'),
+(6, 5, '1 nuit tente', '2024-07-03'),
+(7, 5, '1 nuit camion', '2024-07-02'),
+(8, 5, '1 nuit camion', '2024-07-03');
 
 -- --------------------------------------------------------
 
@@ -45,7 +60,6 @@ DROP TABLE IF EXISTS `mvf_nuitreservation`;
 CREATE TABLE IF NOT EXISTS `mvf_nuitreservation` (
   `Id_reservation` int NOT NULL,
   `Id_nuit` int NOT NULL,
-  `Date_nuitreservation` date DEFAULT NULL,
   PRIMARY KEY (`Id_reservation`,`Id_nuit`),
   KEY `NuitReservation_nuit0_FK` (`Id_nuit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -64,7 +78,25 @@ CREATE TABLE IF NOT EXISTS `mvf_pass` (
   `Date_pass` date DEFAULT NULL,
   `TarifReduit_pass` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id_pass`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
+
+--
+-- Déchargement des données de la table `mvf_pass`
+--
+
+INSERT INTO `mvf_pass` (`Id_pass`, `Prix_pass`, `Pass_pass`, `Date_pass`, `TarifReduit_pass`) VALUES
+(1, 40, 'Pass 1 jour', '2024-07-01', 0),
+(2, 40, 'Pass 1 jour', '2024-07-02', 0),
+(3, 40, 'Pass 1 jour', '2024-07-03', 0),
+(4, 70, 'Pass 2 jours', '2024-07-01', 0),
+(5, 70, 'Pass 2 jours', '2024-07-02', 0),
+(6, 100, 'Pass 3 jours', '2024-07-01', 0),
+(7, 25, 'Pass 1 jour', '2024-07-01', 1),
+(8, 25, 'Pass 1 jour', '2024-07-02', 1),
+(9, 25, 'Pass 1 jour', '2024-07-03', 1),
+(10, 50, 'Pass 2 jours', '2024-07-01', 1),
+(11, 50, 'Pass 2 jours', '2024-07-02', 1),
+(12, 65, 'Pass 3 jours', '2024-07-01', 1);
 
 -- --------------------------------------------------------
 
@@ -81,23 +113,18 @@ CREATE TABLE IF NOT EXISTS `mvf_reservation` (
   `NombreLuge_reservation` int DEFAULT NULL,
   `PrixTotal_reservation` int DEFAULT NULL,
   `Id_user` int NOT NULL,
+  `Id_Pass` int NOT NULL,
   PRIMARY KEY (`Id_reservation`),
-  KEY `reservation_user_FK` (`Id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
+  KEY `reservation_user_FK` (`Id_user`),
+  KEY `Id_Pass` (`Id_Pass`)
+) 
 
 --
--- Structure de la table `mvf_reservationpass`
+-- Déchargement des données de la table `mvf_reservation`
 --
 
-DROP TABLE IF EXISTS `mvf_reservationpass`;
-CREATE TABLE IF NOT EXISTS `mvf_reservationpass` (
-  `Id_reservation` int NOT NULL,
-  `Id_pass` int NOT NULL,
-  PRIMARY KEY (`Id_reservation`,`Id_pass`),
-  KEY `reservationPass_pass0_FK` (`Id_pass`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `mvf_reservation` (`Id_reservation`, `Nombre_reservation`, `Enfants_reservation`, `NombreCasque_reservation`, `NombreLuge_reservation`, `PrixTotal_reservation`, `Id_user`, `Id_Pass`) VALUES
+(1, 2, 1, 3, 5, 100, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -117,7 +144,15 @@ CREATE TABLE IF NOT EXISTS `mvf_user` (
   `Role_user` tinyint(1) DEFAULT NULL,
   `DateRGPD` date NOT NULL,
   PRIMARY KEY (`Id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `mvf_user`
+--
+
+INSERT INTO `mvf_user` (`Id_user`, `Nom_user`, `Prenom_user`, `Email_user`, `Telephone_user`, `AdressePostale_user`, `MotDePasse_user`, `Role_user`, `DateRGPD`) VALUES
+(1, 'Grienay', 'Elodie', 'elodie@free.fr', 601028580, '284 Chemin de la Grépatière', 'fd9d94340dbd72c11b37ebb0d2a19b4d05e00fd78e4e2ce8923b9ea3a54e900df181cfb112a8a73228d1f3551680e2ad9701a4fcfb248fa7fa77b95180628bb2', NULL, '0000-00-00'),
+(3, 'Grienay', 'Elodie', 'test2@free.fr', 601028580, '284 Chemin de la Grépatière', 'fd9d94340dbd72c11b37ebb0d2a19b4d05e00fd78e4e2ce8923b9ea3a54e900df181cfb112a8a73228d1f3551680e2ad9701a4fcfb248fa7fa77b95180628bb2', NULL, '0000-00-00');
 
 --
 -- Contraintes pour les tables déchargées
@@ -133,16 +168,9 @@ ALTER TABLE `mvf_nuitreservation`
 --
 -- Contraintes pour la table `mvf_reservation`
 --
-  ALTER TABLE `mvf_reservation`
-  ADD CONSTRAINT `reservation_pass_FK` FOREIGN KEY (`Id_pass`) REFERENCES `mvf_pass` (`Id_pass`);
-
-
---
--- Contraintes pour la table `mvf_reservationpass`
---
-ALTER TABLE `mvf_reservationpass`
-  ADD CONSTRAINT `reservationPass_pass0_FK` FOREIGN KEY (`Id_pass`) REFERENCES `mvf_pass` (`Id_pass`),
-  ADD CONSTRAINT `reservationPass_reservation_FK` FOREIGN KEY (`Id_reservation`) REFERENCES `mvf_reservation` (`Id_reservation`);
+ALTER TABLE `mvf_reservation`
+  ADD CONSTRAINT `mvf_reservation_ibfk_1` FOREIGN KEY (`Id_Pass`) REFERENCES `mvf_pass` (`Id_pass`),
+  ADD CONSTRAINT `reservation_user_FK` FOREIGN KEY (`Id_user`) REFERENCES `mvf_user` (`Id_user`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
