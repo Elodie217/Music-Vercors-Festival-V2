@@ -72,8 +72,8 @@ if ($userId) {
                                 <td class="px-6 py-4 whitespace-nowrap"><?= $reservation->getNombreLuge_reservation() ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?= $reservation->getPrixTotal_reservation() ?></td>
                                 <!-- <td class="px-6 py-4 whitespace-nowrap">// $reservation->getId_user() </td> -->
-                                <td> <a href="update_reservation.php?id=<?= $reservation->getId_reservation() ?>" class="text-blue-500 hover:text-blue-700 mr-2">Edit</a></td>
-                                <td><a href="delete_reservation.php?id=<?= $reservation->getId_reservation() ?>" class="text-red-500 hover:text-red-700 pr-4" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation?')">Delete</a></td>
+                                  <td><a href="/cours/Music-Vercors-Festival-V2-dev/reservations/edit/<?php echo $reservation->getId_reservation()?>" class="text-green-500 hover:text-green-700">Edit</td>
+                          <td><a href="/cours/Music-Vercors-Festival-V2-dev/reservations/delete/<?php echo$reservation->getId_reservation() ?>" class="text-red-500 hover:text-red-700" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation?')">Delete</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
