@@ -103,7 +103,6 @@ function modificationProfil(userId) {
   fetch(`/cours/Music-Vercors-Festival-V2-dev/profile/update/${userId}`, params)
         .then((res) => res.text())
         .then((data) => {
-            console.log(data);
             if (data === "success") {
                 window.location.href = `/cours/Music-Vercors-Festival-V2-dev/profile`;
             }
@@ -149,7 +148,6 @@ function supprimerUser(userId) {
   let UserId = {
     userID: userId,
   };
-  console.log(UserId);
   let params = {
     method: "POST",
     headers: {
@@ -161,7 +159,6 @@ function supprimerUser(userId) {
   fetch(`/cours/Music-Vercors-Festival-V2-dev/profile/delete/${userId}`, params)
   .then((res) => res.text())
   .then((data) => {
-    console.log(data);
     if (data === "success") {
       window.location.href = "/cours/Music-Vercors-Festival-V2-dev/login";
     } else if (data === "Erreur") {

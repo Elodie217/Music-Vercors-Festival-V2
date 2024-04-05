@@ -41,4 +41,5 @@ switch ($route) {
         include __DIR__ . '/../App/Views/profil.php';
         break;
 
+        
 }

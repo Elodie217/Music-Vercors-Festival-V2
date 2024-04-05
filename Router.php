@@ -19,7 +19,7 @@ $routeParts = explode('/', $route);
 
 switch ($route) {
     case 'reservations':
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_id']))  {
             if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 header('Location: /cours/Music-Vercors-Festival-V2-dev/admin');
                 exit();

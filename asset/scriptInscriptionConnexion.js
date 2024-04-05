@@ -176,7 +176,6 @@ document
     fetch("/cours/Music-Vercors-Festival-V2-dev/login", params)
       .then((res) => res.text())
       .then((data) => {
-        console.log("1- data:", data);
         try {
           const jsonData = JSON.parse(data);
           if (jsonData.status === "success") {
@@ -190,7 +189,6 @@ document
           }
         } catch (error) {
           console.error("Problem w/ JSON:", error);
-          console.log("data:", data);
         }
       })
       .catch((error) => {

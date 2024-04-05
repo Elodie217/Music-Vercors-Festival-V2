@@ -140,7 +140,6 @@ class ReservationController
             if ($test) {
             echo "le mail a bien été envoyé.";
             } else {
-            var_dump($test);
             }
                 header('Location: /cours/Music-Vercors-Festival-V2-dev/reservations');
                 exit();
