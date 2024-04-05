@@ -181,7 +181,7 @@ document
           const jsonData = JSON.parse(data);
           if (jsonData.status === "success") {
             if (jsonData.role === 1) {
-              window.location.href = "/cours/Music-Vercors-Festival-V2-dev/admin_dashboard.php";
+              window.location.href = "/cours/Music-Vercors-Festival-V2-dev/admin";
             } else {
               window.location.href = "/cours/Music-Vercors-Festival-V2-dev/reservations";
             }
@@ -189,7 +189,7 @@ document
             document.querySelector(".champVideConnexion").innerText = jsonData.message;
           }
         } catch (error) {
-          console.error("Problem / JSON:", error);
+          console.error("Problem w/ JSON:", error);
           console.log("data:", data);
         }
       })

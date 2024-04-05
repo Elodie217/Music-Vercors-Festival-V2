@@ -1,6 +1,5 @@
-document
-  .querySelector(".boutonModification")
-  .addEventListener("click", function () {
+document.getElementById("modificationProfilForm").addEventListener("submit", function (event) {
+    event.preventDefault();
     let nomModification = document.querySelector("#nomModification").value;
     let prenomModification = document.querySelector(
       "#prenomModification"
@@ -66,7 +65,7 @@ document
     }
   });
 
-function modificationProfil() {
+function modificationProfil(userId) {
   let nomModification = document.querySelector("#nomModification").value;
   let prenomModification = document.querySelector("#prenomModification").value;
   let emailModification = document.querySelector("#emailModification").value;
@@ -101,9 +100,14 @@ function modificationProfil() {
     body: JSON.stringify(userInscription),
   };
 
-  fetch("./modificationProfil.php", params)
-    .then((res) => res.text())
-    .then((data) => console.log(data));
+  fetch(`/cours/Music-Vercors-Festival-V2-dev/profile/update/${userId}`, params)
+        .then((res) => res.text())
+        .then((data) => {
+            console.log(data);
+            if (data === "success") {
+                window.location.href = `/cours/Music-Vercors-Festival-V2-dev/profile`;
+            }
+        });
 }
 
 function reussiteEchecInscription(reponse) {
@@ -141,20 +145,32 @@ function retour() {
   document.querySelector(".divSupprimerUser").classList.add("hidden");
 }
 
-function supprimerUser(id) {
-  let userId = {
-    userID: id,
+function supprimerUser(userId) {
+  let UserId = {
+    userID: userId,
   };
-  console.log(userId);
+  console.log(UserId);
   let params = {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
-    body: JSON.stringify(userId),
+    body: JSON.stringify(UserId),
   };
 
-  fetch("./supprimerUser.php", params)
-    .then((res) => res.text())
-    .then((data) => console.log(data));
+  fetch(`/cours/Music-Vercors-Festival-V2-dev/profile/delete/${userId}`, params)
+  .then((res) => res.text())
+  .then((data) => {
+    console.log(data);
+    if (data === "success") {
+      window.location.href = "/cours/Music-Vercors-Festival-V2-dev/login";
+    } else if (data === "Erreur") {
+      console.error("Error w/deleting user ");
+    } else {
+      console.error("Error W/server:", data);
+    }
+  })
+  .catch((error) => {
+    console.error("Error w/deleting user :", error);
+  });
 }

@@ -15,17 +15,29 @@ project/
 │   │   └── NuitRepository.php
 │   ├── views/
 │   │   ├── create_reservation.php
-│   │   ├── index.php
+│   │   ├── formUpdateResaAdmin.php
 │   │   ├── indexInscriptionConnexion.php
 │   │   ├── update_reservation.php
-│   │   ├── 
+│   │   ├── Profile.php
+│   │   ├── create_reservation.php
+│   │   ├── index.php
+│   │   
 │   └── asset/
 │   │  │   
-│   │  ├── scriptForm.js
+│   │  ├── Medias
+│   │  │    └── concert-852575_1920.jpg
+│   │  │   
+│   │  ├── modificationProfil.js
+│   │  │   
+│   │  ├── style.css
 │   │  │   
 │   │  ├── responsive.css
 │   │  │   
 │   │  ├── style.css
+│   │  │   
+│   │  ├──styleFormAdmin.js
+│   │  │ 
+│   │  ├──scriptForm.js
 │   │  │   
 │   │  └── scriptInscriptionConnexion.js
 │   │   
@@ -40,12 +52,10 @@ project/
 ├── public/
 │      └── index.php
 │      └── .htaceess
-├── connection.php
-├── index.php
-├── indexInscriptionConnexion.php
+├── Structure
+├── mvfv2.sql
+├── README.md
 ├── init.php
-├── inscription.php
-├── profile.php
 ├── .htaceess
-├── supprimerUser.php
-└── scriptInscriptionConnexion.php 
+└── Router.php
+ 

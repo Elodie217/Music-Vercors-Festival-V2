@@ -110,18 +110,26 @@ class UserRepositories
     }
 
 
-    public function deleteUser($id)
+    public function deleteUser($userId)
     {
         try {
-            $sql = "DELETE FROM mvf_reservation WHERE Id_user = :ID;
-            DELETE FROM mvf_user WHERE Id_user = :ID;";
+            $sqlNuitReservation = "DELETE FROM mvf_nuitreservation WHERE Id_reservation IN (SELECT Id_reservation FROM mvf_reservation WHERE Id_user = :Id_user)";
+            $statementNuitReservation = $this->DB->prepare($sqlNuitReservation);
+            $statementNuitReservation->execute([':Id_user' => $userId]);
 
-            $statement = $this->DB->prepare($sql);
 
-            return $statement->execute([':ID' => $id]);
+            $sqlReservation = "DELETE FROM mvf_reservation WHERE Id_user = :Id_user";
+            $statementReservation = $this->DB->prepare($sqlReservation);
+            $statementReservation->execute([':Id_user' => $userId]);
+    
+            $sqlUser = "DELETE FROM mvf_user WHERE Id_user = :Id_user";
+            $statementUser = $this->DB->prepare($sqlUser);
+            $statementUser->execute([':Id_user' => $userId]);
+    
+            return true;
         } catch (PDOException $error) {
             echo "Erreur de suppression : " . $error->getMessage();
-            return FALSE;
+            return false;
         }
     }
 
@@ -130,8 +138,6 @@ class UserRepositories
 
     public function updateUser(User $user): bool
     {
-        session_start();
-
         $sql = "UPDATE mvf_user 
             SET
               Nom_user = :Nom,
@@ -145,8 +151,9 @@ class UserRepositories
 
         $statement = $this->DB->prepare($sql);
 
+        $userId= $_SESSION['user_id'];
         $retour = $statement->execute([
-            ':Id_user' => $_SESSION['connecté'],
+            ':Id_user' => $userId,
             ':Nom' => $user->getNom_user(),
             ':Prenom' => $user->getPrenom_user(),
             ':Email' => $user->getEmail_user(),

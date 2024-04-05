@@ -63,7 +63,7 @@ require_once __DIR__ . "/../../init.php";
                 </div>
                 <div class="champVideMDPInscription text-red-700"></div>
                 <button class="w-full mt-6  rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans boutonInscription bg-[#800080] hover:bg-[#808080] duration-300">Inscritpion</button>
-                <button type="submit" class="w-full mt-6 mb-3 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#808080] hover:bg-[#800080] duration-300" onclick="redirection('divInscription', 'divConnexion')">Connexion</button>
+                <button type="submit" class="w-full mt-6 mb-3 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#808080] hover:bg-[#800080] duration-300" onclick="redirection('divInscription','divConnexion')">Connexion</button>
             </div>
 
             <div class="divConnexion bg-white p-10 rounded-lg shadow-lg min-w-full my-24 hidden">

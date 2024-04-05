@@ -31,14 +31,12 @@ class ReservationController
         } else {
             $reservations = [];
         }
-        require_once __DIR__ . '../../../App/Views/index.php';
     }
 
     public function create()
     {
         $nuitOptions = $this->nuitRepository->getAllNuits();
         $passTypes = $this->passRepository->getDistinctPasses();
-        require_once __DIR__ . '../../../App/Views/create_reservation.php';
     }
 
     public function store()
@@ -55,10 +53,37 @@ class ReservationController
                 $enfants = 0;
             }
     
-            $passId = intval($_POST['passDate']);
-            $selectedPass = $this->passRepository->getPassById($passId);
-            $passPrice = $selectedPass->getPrix_pass();
+            if (isset($_POST['passType']) && !empty($_POST['passType'])) {
+                $selectedPassType = $_POST['passType'][0];
+            } else {
+                echo "No pass type selected.";
+                exit();
+            }
     
+            if (isset($_POST['passDate']) && !empty($_POST['passDate'])) {
+                $selectedPassDates = $_POST['passDate'];
+                $selectedPassDate = null;
+    
+                foreach ($selectedPassDates as $passDate) {
+                    $pass = $this->passRepository->getPassById($passDate);
+                    if ($pass && $pass->getPass_pass() == $selectedPassType) {
+                        $selectedPassDate = $passDate;
+                        break;
+                    }
+                }
+    
+                if ($selectedPassDate !== null) {
+                    $selectedPass = $this->passRepository->getPassById($selectedPassDate);
+                    $passPrice = $selectedPass->getPrix_pass();
+                    $passId = $selectedPassDate;
+                } else {
+                    echo "No pass selected.";
+                    exit();
+                }
+            } else {
+                echo "No pass date selected.";
+                exit();
+            }
             $nuitIds = [];
             $nuitOptions = $this->nuitRepository->getAllNuits();
             foreach ($nuitOptions as $nuit) {

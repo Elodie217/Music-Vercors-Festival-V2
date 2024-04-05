@@ -1,16 +1,12 @@
 <?php
-session_start();
-
-require_once "./App/config/database.php";
-require_once "./autoload.php";
+require_once "../init.php";
 
 use App\Repositories\UserRepositories;
 
-// $idUser = $_SESSION['connecté'];
-$idUser = 1;
+$userId = $_SESSION['user_id'] ?? null;
 
 $userRepositorie = new UserRepositories();
-$user = $userRepositorie->getUserbyId($idUser);
+$user = $userRepositorie->getUserbyId($userId);
 
 ?>
 
@@ -36,15 +32,15 @@ $user = $userRepositorie->getUserbyId($idUser);
 
         <div class="divSupprimerUser absolute z-20 mx-[500px] w-96 top-[40vh] border-2 bg-[#dfdfdf] border-[#800080] rounded-2xl py-2 text-center p-4 hidden">
             <p class="mb-6 font-semibold text-xl">Voulez-vous supprimer ce compte ?</p>
-            <div class="divBoutton"> <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#800080] hover:bg-[#808080] duration-300 mx-4" onclick="supprimerUser(2)">Oui</button>
-                <!-- Ici faudra mettre $_SESSION['connecté'] en paramètre de la fonction supprimerUser -->
+            <div class="divBoutton">
+            <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#800080] hover:bg-[#808080] duration-300 mx-4" onclick="supprimerUser(<?= $userId?>)">Oui</button>
                 <button class="rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans bg-[#800080] hover:bg-[#808080] duration-300 mx-4" onclick="retour()">Non</button>
             </div>
         </div>
 
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
-            <div class="divModificationProfil bg-white p-10 rounded-lg shadow-lg min-w-full">
-                <h1 class="text-center text-2xl mb-6 text-gray-600 font-bold font-sans">Modification profil</h1>
+            <form id="modificationProfilForm" class="divModificationProfil bg-white p-10 rounded-lg shadow-lg min-w-full">               
+                 <h1 class="text-center text-2xl mb-6 text-gray-600 font-bold font-sans">Modification profil</h1>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="nomModification">Nom</label>
                     <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="nomModification" id="nomModification" value="<?= $user->getNom_user() ?>" />
@@ -75,12 +71,12 @@ $user = $userRepositorie->getUserbyId($idUser);
                     <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="password" name="confirmationMotDePasseModification" id="confirmationMotDePasseModification" placeholder="Confirmation du mot de passe" />
                 </div>
                 <div class="champVideMDPModification text-red-700"></div>
-                <button class="w-full mt-6  rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans boutonModification bg-[#800080] hover:bg-[#808080] duration-300">Modifier</button>
-            </div>
+                <button type="submit" class="w-full mt-6 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans boutonModification bg-[#800080] hover:bg-[#808080] duration-300">Modifier</button>
+               </form>
 
 </body>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="./modificationProfil.js"></script>
+<script src="./asset/modificationProfil.js"></script>
 <script src="https://kit.fontawesome.com/97cd5da9a0.js" crossorigin="anonymous"></script>
 
 </html>

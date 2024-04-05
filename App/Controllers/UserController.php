@@ -144,4 +144,87 @@ class UserController
         header('Location: /cours/Music-Vercors-Festival-V2-dev/login');
         exit();
     }
+
+    public function getProfile()
+    {
+        $userId = $_SESSION['user_id'] ?? null;
+        if ($userId) {
+            return $this->userRepository->getUserbyId($userId);
+        }
+        return null;
+    }
+
+    public function updateProfile($userId)
+    {
+        $data = file_get_contents("php://input");
+        $userInfos = json_decode($data, true);
+
+        if (isset($userInfos)) {
+            if (isset($userInfos['nomModification']) && isset($userInfos['prenomModification']) && isset($userInfos['emailModification']) && isset($userInfos['telephoneModification']) && isset($userInfos['adressePostaleModification']) && isset($userInfos['motDePasseModification']) && isset($userInfos['confirmationMotDePasseModification']) && !empty($userInfos['nomModification']) && !empty($userInfos['prenomModification']) && !empty($userInfos['emailModification']) && !empty($userInfos['telephoneModification']) && !empty($userInfos['adressePostaleModification']) && !empty($userInfos['motDePasseModification']) && !empty($userInfos['confirmationMotDePasseModification'])) {
+                $prenom = htmlspecialchars($userInfos['prenomModification']);
+                $nom = htmlspecialchars($userInfos['nomModification']);
+
+                if (filter_var($userInfos['emailModification'], FILTER_VALIDATE_EMAIL)) {
+                    $email = htmlspecialchars($userInfos['emailModification']);
+                } else {
+                    echo 'Email incorrect';
+                    exit();
+                }
+
+                $tel = htmlspecialchars($userInfos['telephoneModification']);
+                $adresse = htmlspecialchars($userInfos['adressePostaleModification']);
+
+                if ($userInfos["motDePasseModification"] >= 6 && $userInfos["confirmationMotDePasseModification"] >= 6) {
+                    if ($userInfos["motDePasseModification"] == $userInfos["confirmationMotDePasseModification"]) {
+                        $mdp = hash("whirlpool", $userInfos["motDePasseModification"]);
+                    } else {
+                        echo 'Les mots de passe sont différents.';
+                        exit();
+                    }
+                } else {
+                    echo 'Le mot de passe doit contenir au moins 6 caractères.';
+                    exit();
+                }
+
+                $infosUser = array(
+                    'Id_user' => $userId,
+                    "Nom_user" => $nom,
+                    "Prenom_user" => $prenom,
+                    "Email_user" => $email,
+                    "Telephone_user" => $tel,
+                    "AdressePostale_user" => $adresse,
+                    "MotDePasse_user" => $mdp,
+                );
+
+                $user = new User($infosUser);
+                $retourUser = $this->userRepository->updateUser($user);
+
+                if ($retourUser) {
+                    echo 'success';
+                    exit();
+                } else {
+                    echo "Erreur";
+                    exit();
+                }
+            } else {
+                echo 'Merci de remplir tous les champs.';
+                exit();
+            }
+        } else {
+            echo 'Merci de remplir tous les champs.';
+            exit();
+        }
+    }
+
+    public function deleteAccount($userId)
+    {
+        if ($this->userRepository->deleteUser($userId)) {
+            session_unset();
+            session_destroy();
+            echo 'success';
+        } else {
+            echo 'Erreur';
+        }
+    }
+
 }
