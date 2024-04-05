@@ -7,6 +7,7 @@ use App\Models\Reservation;
 use App\Repositories\NuitRepository;
 use App\Repositories\PassRepository;
 use App\Repositories\ReservationRepository;
+use App\Repositories\UserRepositories;
 
 class ReservationController
 {
@@ -117,6 +118,30 @@ class ReservationController
                 foreach ($nuitIds as $nuitId) {
                     $this->reservationRepository->insertNuitReservation($reservation->getId_reservation(), $nuitId);
                 }
+            $userRepo = new UserRepositories;
+            $user = $userRepo->getUserbyId($userId);
+            $to      =  $user->getEmail_user(). ', admin@gmail.com';
+            $subject = 'Nouvelle réservation';
+            $message = 'Bonjour '.$user->getNom_user().' '. $user->getPrenom_user().', 
+
+            Confirmation de vorte reservation:  
+
+            Nombre de personne : '.$reservation->getNombre_reservation() .'
+            Pass Jour : '. $pass->getPass_pass() .' '. $pass->getDate_pass() .' '. $pass->getPrix_pass() .' €
+            Prix Total : '. $reservation->getPrixTotal_reservation() .' € 
+
+            Merci. ';
+            $headers = 'From: vercorsmusicfestival@gmail.com' . "\r\n" .
+            'Reply-To: vercorsmusicfestival@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+            $test = mail($to, $subject, $message, $headers);
+
+            if ($test) {
+            echo "le mail a bien été envoyé.";
+            } else {
+            var_dump($test);
+            }
                 header('Location: /cours/Music-Vercors-Festival-V2-dev/reservations');
                 exit();
             } else {
